@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes')
 const jwt = require('jsonwebtoken')
 
 const authenticateUser = async (req, res, next) => {
-	const token = req.cookies.token
+	const token = req.signedCookies.token
 	// console.log(token)
 	if(!token){
 		return res.status(StatusCodes.UNAUTHORIZED).json({success: false, msg: "Unauthorized"})

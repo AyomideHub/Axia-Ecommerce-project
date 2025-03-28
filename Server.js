@@ -14,7 +14,7 @@ const {ErrorHandler} = require('./middelwares/ErrorHandler')
 const app = express()
 
 // middleware
-app.use(cookieParser())
+app.use(cookieParser(process.env.COOKIES_SECRET))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -34,10 +34,10 @@ app.use(notFound)
 app.use(ErrorHandler)
 
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 3000
 const start = async () => {
 	try {
-		await connectdb(process.env.MONGO_LOCAL)
+		await connectdb(process.env.MONGO_URI)
 		app.listen(port, () => {
 			console.log('server is running');
 		})

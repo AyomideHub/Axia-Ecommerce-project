@@ -54,14 +54,8 @@ const login = async (req, res) => {
     throw new BadRequest('invalid credentials')
   }
 
-  const token = user.createJWT()
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_MODE === 'production', // for dev mode
-    sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
-
+  await user.createCookies(res);
+  
   res.status(StatusCodes.OK).json({
     success: true,
     msg: "login sucessfully",

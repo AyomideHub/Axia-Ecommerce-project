@@ -88,14 +88,22 @@ UserSchema.methods.getUserDocs = function () {
   };
 };
 
-UserSchema.methods.createJWT = function () {
-  return jwt.sign(
+UserSchema.methods.createCookies = function (res) {
+  const token = jwt.sign(
     { id: this._id, email: this.email, role: this.role },
     process.env.JWT_SECRET,
     {
       expiresIn: "7d",
     }
   );
+
+   return res.cookie("token", token, {
+    signed: true,
+    httpOnly: true,
+    secure: process.env.NODE_MODE === 'production', // for dev mode
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
 };
 
 UserSchema.methods.comparePassword = async function (password) {
