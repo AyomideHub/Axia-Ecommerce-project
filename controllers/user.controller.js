@@ -9,6 +9,7 @@ const currentUser = async (req, res) => {
   }
   res.status(StatusCodes.OK).json(user.getUserDocs());
 };
+
 const getAllUsers = async (req, res) => {
   const user = await User.find({ role: "user" })
     .select(
@@ -20,6 +21,7 @@ const getAllUsers = async (req, res) => {
   }
   res.status(StatusCodes.OK).json({ user, NoOfUsers: user.length });
 };
+
 const getSingleUser = async (req, res) => {
   const user = await User.findById({ _id: req.params.id });
   if (!user) {
@@ -28,6 +30,7 @@ const getSingleUser = async (req, res) => {
 
   res.status(StatusCodes.OK).json(user.getUserDocs());
 };
+
 const updateUserProfile = async (req, res) => {
   //user cant change their email and fullname
    const { PhoneNo, street, city, state, postalCode } = req.body;
@@ -42,6 +45,7 @@ const updateUserProfile = async (req, res) => {
 
   res.status(StatusCodes.OK).json(user.getUserDocs());
 };
+
 const deleteUser = async (req, res) => {
   const user = await User.findByIdAndDelete({ _id: req.user.id });
   if (!user) {

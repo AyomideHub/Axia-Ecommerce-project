@@ -31,6 +31,3 @@ module.exports = multer({
 	// 	fileSize: 5 * 1024 * 1024, //5MB file size limit	
 	// 	 }
 })
-
-// in the route
-// router.post('/upload', othermiddileware, uploadmiddleware.single('image')- from multer, uploadimagecontroller-for upload to cloudinary)

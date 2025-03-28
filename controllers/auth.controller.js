@@ -5,7 +5,7 @@ const {
   ForgetPasswordTokenMail,
 } = require("../utils/mail");
 const { StatusCodes } = require("http-status-codes");
-const {BadRequest, NotFoundError, unAuthorizedError} = require('../errors')
+const {BadRequest, NotFoundError, unAuthorizedError, ServerError} = require('../errors')
 
 
 const register = async (req, res) => {

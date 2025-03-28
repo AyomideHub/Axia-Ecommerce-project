@@ -14,6 +14,4 @@ const uploadToCloudinary = async (filePath) =>{
 	
 }
 
-//uploader.destroy(image.publicId) to delete
-
 module.exports = {uploadToCloudinary}

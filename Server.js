@@ -8,7 +8,6 @@ const UserRoute = require('./routes/user.route')
 const ProductRoute = require('./routes/product.route')
 const CartRoute = require('./routes/cart.routes')
 const OrderRoute = require('./routes/order.route')
-const ReviewsRoute = require('./routes/reviews.route')
 const notFound = require('./middelwares/not-found')
 const {ErrorHandler} = require('./middelwares/ErrorHandler')
 
@@ -29,7 +28,6 @@ app.use('/api/v1/users', UserRoute)
 app.use('/api/v1/products', ProductRoute)
 app.use('/api/v1/carts', CartRoute)
 app.use('/api/v1/orders', OrderRoute)
-app.use('/api/v1/reviews', ReviewsRoute)
 
 // errors
 app.use(notFound)
