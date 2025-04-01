@@ -3,7 +3,7 @@ const { BadRequest, NotFoundError, unAuthorizedError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
 const currentUser = async (req, res) => {
-  const user = await User.findOne({ _id: req.user.id });
+  const user = await User.findById({ _id: req.user.id }).populate('Carts');
   if (!user) {
     throw new NotFoundError("No user is Available");
   }

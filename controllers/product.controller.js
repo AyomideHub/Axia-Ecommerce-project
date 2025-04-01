@@ -3,7 +3,7 @@ const { uploadToCloudinary } = require("../utils/cloudinary.upload");
 const Product = require("../models/product.model");
 const { StatusCodes } = require("http-status-codes");
 
-const createProduct = async (req, res) => {
+const createProduct = async (req, res, next) => {
   if (!req.files) {
     throw new BadRequest("Images of Items are needed");
   }
@@ -25,7 +25,8 @@ const createProduct = async (req, res) => {
 
     res.status(StatusCodes.CREATED).json({ product });
   } catch (error) {
-    throw new BadRequest("Something went wrong, try again later");
+    next(error)
+    // throw new BadRequest("Something went wrong, try again later");
   }
 };
 

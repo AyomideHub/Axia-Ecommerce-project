@@ -8,7 +8,7 @@ const { StatusCodes } = require("http-status-codes");
 const {BadRequest, NotFoundError, unAuthorizedError, ServerError} = require('../errors')
 
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
 
   const {fullname, email, password} = req.body
   if (!fullname || !email || !password ) {
@@ -36,7 +36,8 @@ const register = async (req, res) => {
    
   } catch (error) {
     console.log(error)
-    throw new BadRequest('something went wrong, try again later')
+    next(error)
+    // throw new BadRequest('something went wrong, try again later')
   }
 
   
@@ -44,7 +45,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate('Carts');
   if (!user) {
     throw new NotFoundError('No user with this Email')
   }
@@ -113,7 +114,7 @@ const ChangePassword = async (req, res) => {
     .json({ success: true, msg: "password changed successfully" , data: user.getUserDocs()});
 };
 
-const ForgetPassword = async (req, res) => {
+const ForgetPassword = async (req, res, next) => {
   const { email } = req.body;
   if (!email) {
     throw new BadRequest("Input valid email address");

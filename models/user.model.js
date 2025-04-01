@@ -4,21 +4,20 @@ const validator = require("validator");
 const jwt = require("jsonwebtoken");
 
 const addressSchema = mongoose.Schema({
-	street:{
-		type: String
-	},
-	city: {
-		type: String
-	},
-	state: {
-		type: String
-	},
-	postalCode: {
-		type: String
-	}, 
+  street: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  postalCode: {
+    type: String,
+  },
+});
 
-}
-)
 const UserSchema = mongoose.Schema(
   {
     fullname: {
@@ -50,23 +49,23 @@ const UserSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-	PhoneNo:{
-		type: Number,
-		required: [true, "please provide your Phone Number"],
-		unique: true,
-	}, 
-	PhoneNoVerify: {
-		type: Boolean,
-		default: false,
-	  },
-	address: addressSchema,
-	TwoFaEnabled: Boolean,
+    PhoneNo: {
+      type: Number,
+      required: [true, "please provide your Phone Number"],
+      unique: true,
+    },
+    PhoneNoVerify: {
+      type: Boolean,
+      default: false,
+    },
+    address: addressSchema,
+    TwoFaEnabled: Boolean,
     EmailVerificationToken: String,
     EmailVerificationTokenExpiredAt: Date,
     PasswordResetToken: String,
     PasswordResetTokenExpiredAt: Date,
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 UserSchema.pre("save", async function (next) {
@@ -76,17 +75,23 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-
 UserSchema.methods.getUserDocs = function () {
   return {
     ...this._doc,
     password: undefined,
     EmailVerificationToken: undefined,
     EmailVerificationTokenExpiredAt: undefined,
-	// EmailVerify: undefined,
-	// PhoneNoVerify: undefined
+    // EmailVerify: undefined,
+    // PhoneNoVerify: undefined
   };
 };
+
+UserSchema.virtual("Carts", {
+  ref: "Cart",
+  localField: "_id",
+  foreignField: "userId",
+  justOne: false,
+});
 
 UserSchema.methods.createCookies = function (res) {
   const token = jwt.sign(
@@ -97,10 +102,10 @@ UserSchema.methods.createCookies = function (res) {
     }
   );
 
-   return res.cookie("token", token, {
+  return res.cookie("token", token, {
     signed: true,
     httpOnly: true,
-    secure: process.env.NODE_MODE === 'production', // for dev mode
+    secure: process.env.NODE_MODE === "production", // for dev mode
     sameSite: "strict",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
