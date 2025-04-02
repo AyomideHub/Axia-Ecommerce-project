@@ -4,7 +4,7 @@ const Order = require("../models/order.model");
 const { BadRequest, NotFoundError, unAuthorizedError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
-const createOrder = async (req, res) => {
+const createOrder = async (req, res, next) => {
   //const { street, PhoneNo, city, state, postalCode} = req.body
   try {
     const carts = await Cart.findOne({ userId: req.user.id }).populate({
@@ -58,7 +58,7 @@ const createOrder = async (req, res) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "failed" });
   } catch (error) {
     console.log(error);
-    throw new BadRequest(error.message);
+    next(error)
   }
 };
 
@@ -78,9 +78,6 @@ const getSingleOrder = async (req, res) => {
 	res.status(StatusCodes.OK).json(order);
 };
 
-const updateOrder = async (req, res) => {
-
-};
 
 const cancelOrder = async (req, res) => {
 	const order = await Order.findById(req.params.id)
@@ -100,6 +97,5 @@ module.exports = {
   createOrder,
   getAllOrders,
   getSingleOrder,
-  updateOrder,
   cancelOrder,
 };

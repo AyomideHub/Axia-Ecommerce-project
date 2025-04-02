@@ -34,7 +34,7 @@ app.use(notFound)
 app.use(ErrorHandler)
 
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 const start = async () => {
 	try {
 		await connectdb(process.env.MONGO_URI)
@@ -45,5 +45,4 @@ const start = async () => {
 		console.log(error);
 	}
 }
-
 start()

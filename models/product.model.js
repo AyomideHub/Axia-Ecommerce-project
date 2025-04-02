@@ -4,14 +4,13 @@ const productSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      unique: true,
       required: [true, "Please provide product name"],
       maxlength: [100, "Name can not be more than 100 characters"],
     },
     price: {
       type: Number,
       required: [true, "Please provide product price"],
-      default: 0,
+      
     },
     description: {
       type: String,
@@ -19,16 +18,18 @@ const productSchema = mongoose.Schema(
       maxlength: [1000, "Description can not be more than 1000 characters"],
     },
     imageurl: {
-      type: [String]
+      type: [String],
+      required: true
     },
     imagepublicId: {
-      type: [String]
+      type: [String],
+      required: true
     },
     category: {
       type: String,
       required: [true, "Please provide product category"],
     },
-    company: {
+    brand: {
       type: String,
     },
     colours: {
@@ -64,6 +65,7 @@ const productSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 module.exports = mongoose.model("Product", productSchema);
 

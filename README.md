@@ -49,42 +49,44 @@ POST /api/v1/auth/login
 POST /api/v1/auth/login
 
 ```
-4. Create Task
+4. Create Product - Admin Only
 ```
-POST /api/v1/tasks
+POST /api/v1/products
 
 ```
-5. Get A Task
+5. Get A product
 ```
-GET /api/v1/tasks/:id
+GET /api/v1/products/:id
 
 ```
-6. Update A Task
+6. Update A product
 ```
-PATCH /api/v1/tasks/:id
+PATCH /api/v1/products/:id - Admin Only
 
 ```
-7. Delete A Task
+7. Delete A product
 ```
-DELETE /api/v1/tasks/:id
+DELETE /api/v1/products/:id
 
 ```
-8. Get All Tasks
+8. Get All products
 ```
-GET /api/v1/tasks
+GET /api/v1/products
 
 ```
 9. Queries
 ```
-GET /api/v1/tasks?
-
-options:
-status - completed or incomplete,
-name,
-category,
-sort - Deadline, Category, createdAt
-order - asc, dsc
-page,
-limit,
+GET /api/v1/products?
+	sort - price, category,
+    order,
+    page,
+    limit,
+    name,
+    category,
+    brand,
+    size,
+    freeShipping - true or false,
+    price  - set range min to max e.g price=15000-35000,
 
 ```
+10. 

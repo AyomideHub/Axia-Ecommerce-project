@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const  {authenticateUser, authenticateRole} = require('../middelwares/authentication')
-const {createOrder, getAllOrders, getSingleOrder, updateOrder, cancelOrder} = require('../controllers/order.controller')
+const {createOrder, getAllOrders, getSingleOrder, cancelOrder} = require('../controllers/order.controller')
 
 
 router.route('/').post(authenticateUser, createOrder).get([authenticateUser,authenticateRole], getAllOrders)
-router.route('/:id').patch(authenticateUser, updateOrder).delete(authenticateUser, cancelOrder).get(authenticateUser, getSingleOrder)
+router.route('/:id').delete(authenticateUser, cancelOrder).get(authenticateUser, getSingleOrder)
 
 
 

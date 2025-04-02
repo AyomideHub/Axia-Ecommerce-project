@@ -14,20 +14,8 @@ const storage = multer.diskStorage({
 
 })
 
-//set filter function
-// const checkFileFilter = (req, file, cb) => {
-// 	if (file.mimetype.startWith('image')){
-// 		cb(null, true)
-// 	}else{
-// 		cb(new Error(''))
-// 	}
-// }
 
 // multer middleware
 module.exports = multer({
 	storage: storage,
-	//fileFilter: checkFileFilter,
-	// limits:{
-	// 	fileSize: 5 * 1024 * 1024, //5MB file size limit	
-	// 	 }
 })

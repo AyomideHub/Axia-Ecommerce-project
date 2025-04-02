@@ -23,7 +23,7 @@ const ErrorHandler = (err, req, res, next) => {
 		newError.message = `No items found with id: ${err.Value}`,
 		newError.StatusCode = 404	
 	}
-
+	console.log(err)
 	res.status(newError.StatusCode).json({message: newError.message})
 
 
