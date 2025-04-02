@@ -8,6 +8,10 @@ const { StatusCodes } = require("http-status-codes");
 const {BadRequest, NotFoundError, unAuthorizedError, ServerError} = require('../errors')
 
 
+/* The client/developer can make one of the users account the admin from the mongo database,
+ by updating the user role to admin in the user model collection
+ */
+
 const register = async (req, res, next) => {
 
   const {fullname, email, password} = req.body

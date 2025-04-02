@@ -33,6 +33,8 @@ npm run dev
 
 ```
 
+## The client/developer can make one of the users account the admin from the mongo database by updating the role to admin in the user model collection
+
 ## End Point ##
 1. Register
 ```

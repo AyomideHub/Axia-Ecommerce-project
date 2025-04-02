@@ -18,6 +18,10 @@ const addressSchema = mongoose.Schema({
   },
 });
 
+/* The client/developer can make one of the users account the admin from the mongo database,
+ by updating the user role to admin in the user model collection
+ */
+
 const UserSchema = mongoose.Schema(
   {
     fullname: {
