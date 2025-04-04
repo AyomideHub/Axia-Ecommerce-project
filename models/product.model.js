@@ -10,7 +10,6 @@ const productSchema = mongoose.Schema(
     price: {
       type: Number,
       required: [true, "Please provide product price"],
-      
     },
     description: {
       type: String,
@@ -19,11 +18,11 @@ const productSchema = mongoose.Schema(
     },
     imageurl: {
       type: [String],
-      required: true
+      required: true,
     },
     imagepublicId: {
       type: [String],
-      required: true
+      required: true,
     },
     category: {
       type: String,
@@ -59,24 +58,29 @@ const productSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    uploadBy:{
+    uploadBy: {
       type: mongoose.Schema.Types.ObjectId,
-    }
+      ref: 'User',
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-productSchema.virtual('reviews', {
-  ref: 'Review',
-  localField: '_id',
-  foreignField: 'productId',
-  justOne: false
-})
-
-ProductSchema.pre('deleteOne', async function (next) {
-  await this.model('Review').deleteMany({ productId: this._id });
+productSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "productId",
+  justOne: false,
 });
 
+productSchema.pre("deleteOne",  { document: true, query: false }, async function (next) {
+  try {
+    await this.model("Review").deleteMany({ productId: this._id });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+
 module.exports = mongoose.model("Product", productSchema);
-
-

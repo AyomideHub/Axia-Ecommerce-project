@@ -24,7 +24,7 @@ const ErrorHandler = (err, req, res, next) => {
 		newError.StatusCode = 404	
 	}
 	console.log(err)
-	res.status(newError.StatusCode).json({message: newError.message})
+	res.status(newError.StatusCode).json({newError})
 
 
 }

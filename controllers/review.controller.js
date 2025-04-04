@@ -27,7 +27,7 @@ const deleteReview = async (req, res) => {
 
   const review = await Review.findOne({ _id: req.params.id, userId: req.user.id });
   if (!review) {
-    throw new CustomError.NotFoundError(`No review with id ${req.params.id}`);
+    throw new NotFoundError(`No review with id ${req.params.id}`);
   }
   await review.deleteOne();
   res.status(StatusCodes.OK).json({ msg: 'Success! Review removed' });

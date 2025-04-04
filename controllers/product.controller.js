@@ -2,7 +2,7 @@ const { BadRequest, NotFoundError, unAuthorizedError } = require("../errors");
 const { uploadToCloudinary } = require("../utils/cloudinary.upload");
 const Product = require("../models/product.model");
 const { StatusCodes } = require("http-status-codes");
-const cloudinary = require('../configs/cloudinary.config')
+const cloudinary = require("../configs/cloudinary.config");
 
 const createProduct = async (req, res, next) => {
   if (!req.files) {
@@ -97,7 +97,9 @@ const getAllProducts = async (req, res) => {
 
 const getSingleProduct = async (req, res) => {
   const productId = req.params.id;
-  const product = await Product.findById({ _id: productId }).populate('reviews');
+  const product = await Product.findById({ _id: productId }).populate(
+    "reviews"
+  );
   if (!product) throw new NotFoundError("No product with such ID");
 
   res.status(StatusCodes.OK).json({ success: true, product });
@@ -109,19 +111,16 @@ const deleteProduct = async (req, res, next) => {
     const product = await Product.findById({ _id: productId });
     if (!product) throw new NotFoundError("No product with such ID");
     for (const imageId of product.imagepublicId) {
-      console.log(imageId)
-      await cloudinary.uploader.destroy(imageId)
-   }
-   
-   if(await Product.findByIdAndDelete({ _id: productId })){
+      console.log(imageId);
+      await cloudinary.uploader.destroy(imageId);
+    }
+    await product.deleteOne();
     res
-    .status(StatusCodes.OK)
-    .json({ success: true, message: "product successfully deleted" });
-   }
-   } catch (error) {
-    next(error)
-   }
-  
+      .status(StatusCodes.OK)
+      .json({ success: true, message: "product successfully deleted" });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const updateProduct = async (req, res) => {
