@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const AuthRoute = require('./routes/Auth.Route')
 const UserRoute = require('./routes/user.route')
 const ProductRoute = require('./routes/product.route')
+const ReviewRoute = require('./routes/review.route')
 const CartRoute = require('./routes/cart.routes')
 const OrderRoute = require('./routes/order.route')
 const notFound = require('./middelwares/not-found')
@@ -19,15 +20,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 
-// routes
-// app.get('/healthcheck', (req, res) => {
-// 	res.status(200).send('<h1> GOOD </h1>')
-// })
+
 app.use('/api/v1/auth', AuthRoute)
 app.use('/api/v1/users', UserRoute)
 app.use('/api/v1/products', ProductRoute)
+app.use('/api/v1/reviews', ReviewRoute)
 app.use('/api/v1/carts', CartRoute)
 app.use('/api/v1/orders', OrderRoute)
+
 
 // errors
 app.use(notFound)
